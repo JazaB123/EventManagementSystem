@@ -182,7 +182,8 @@
                         break;
                     }
                 }
-
+                eventItem.Name = newName;
+                
                 Console.Write($"Enter new Description (leave empty to keep current): ");
                 string? newDescription = Console.ReadLine();
                 if (!string.IsNullOrEmpty(newDescription)) eventItem.Description = newDescription;
