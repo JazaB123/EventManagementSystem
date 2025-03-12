@@ -102,7 +102,7 @@
         static void ListEvents()
         {
             // Check if an event exists in the list
-            if(events.Count == 0)
+            if (events.Count == 0)
             {
                 Console.WriteLine("No events have been added"); // if no events exist return this message
             }
@@ -121,7 +121,7 @@
             string? _id = Console.ReadLine();
 
             // Try to parse the string Id entered by the user into an int
-            if(int.TryParse(_id, out int id))
+            if (int.TryParse(_id, out int id))
             {
                 Console.WriteLine($"Valid ID entered: {id}");
             }
@@ -151,8 +151,9 @@
             Console.Write("Enter Event ID to update: ");
             string? _id = Console.ReadLine();
 
+
             // Try to parse the string Id entered by the user into an int
-            if(int.TryParse(_id, out int id))
+            if (int.TryParse(_id, out int id))
             {
                 Console.WriteLine($"Valid ID entered: {id}");
             }
@@ -160,6 +161,7 @@
             {
                 Console.WriteLine("The ID you have entered does not exist. Try again");
             }
+
 
             // Find the event by its ID
             var eventItem = events.Find(e => e.Id == id);
@@ -172,6 +174,7 @@
                     Console.Write($"Enter new Name (leave empty to keep current): ");
                     string? _name = Console.ReadLine();
 
+
                     if (string.IsNullOrEmpty(_name))
                     {
                         break; // Exit loop if no new name is entered
@@ -183,10 +186,12 @@
                     }
                 }
                 eventItem.Name = newName;
-                
+
+
                 Console.Write($"Enter new Description (leave empty to keep current): ");
                 string? newDescription = Console.ReadLine();
                 if (!string.IsNullOrEmpty(newDescription)) eventItem.Description = newDescription;
+
 
                 DateTime? newDate = eventItem.Date;
                 while (true) // Ensure the new date is valid format (leave empty to keep current)
@@ -194,10 +199,12 @@
                     Console.Write($"Enter new Date (leave empty to keep current): ");
                     string? _date = Console.ReadLine();
 
+
                     if (string.IsNullOrEmpty(_date))
                     {
                         break; // Exit loop if no new date is entered
                     }
+
 
                     DateTime date;
                     if (DateTime.TryParseExact(_date, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out date))
@@ -211,41 +218,29 @@
                     }
                 }
 
+
                 Console.Write($"Enter new Location (leave empty to keep current): ");
                 string? newLocation = Console.ReadLine();
                 if (!string.IsNullOrEmpty(newLocation)) eventItem.Location = newLocation;
 
-                // Ask user to confirm update
-                Console.WriteLine("\nHere are the changes:");
-                Console.WriteLine($"Name: {newName}");
-                Console.WriteLine($"Description: {eventItem.Description}");
-                Console.WriteLine($"Date: {eventItem.Date.ToShortDateString()}");
-                Console.WriteLine($"Location: {eventItem.Location}");
 
-                Console.WriteLine("Are you sure you want to update this event? (yes/no): ");
-                string? confirm = Console.ReadLine();
-                if (confirm?.ToLower() == "yes")
-                {
-                    Console.WriteLine("Event updated successfully!");
-                }
-                else
-                {
-                    Console.WriteLine("Update Canceled");
-                }
+                Console.WriteLine("Event updated successfully!");
+
+
             }
             else
             {
                 Console.WriteLine("Event not found.");
             }
         }
-
+        
         static void DeleteEvent()
         {
             Console.Write("Enter Event ID to delete: ");
             string? _id = Console.ReadLine();
 
             // Try to parse the string Id entered by the user into an int
-            if(int.TryParse(_id, out int id))
+            if (int.TryParse(_id, out int id))
             {
                 Console.WriteLine($"Valid ID entered: {id}");
             }
