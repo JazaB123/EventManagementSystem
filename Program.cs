@@ -2,7 +2,9 @@
 {
     class Program
     {
+        // List to store events
         private static List<Event> events = new List<Event>();
+        //Assigning Ids to new events
         private static int nextId = 1;
 
         static void Main(string[] args)
@@ -13,7 +15,7 @@
             while (running)
             {
                 Console.Write("> ");
-                string? command = Console.ReadLine();
+                string? command = Console.ReadLine(); // Handles user commands
 
                 switch (command?.ToLower())
                 {
@@ -45,6 +47,7 @@
         static void CreateEvent()
         {
             string? name;
+            // Loop to ensure name is not empty
             while (true) 
             {
                 Console.Write("Enter Event Name: ");
@@ -52,7 +55,7 @@
 
                 if (!string.IsNullOrEmpty(name))
                 {
-                    break; 
+                    break; // Exit loop if name is not empty
                 }
                 else
                 {
@@ -64,14 +67,14 @@
             string? description = Console.ReadLine();
 
             DateTime date;
-            while (true) 
+            while (true) // Loop to get a valid date
             {
                 Console.Write("Enter Date (yyyy-MM-dd): ");
                 string? _date = Console.ReadLine();
 
                 if (DateTime.TryParseExact(_date, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out date))
                 {
-                    break; 
+                    break; // Exit Loop if date entered is in correct format
                 }
                 else
                 {
@@ -82,6 +85,7 @@
             Console.Write("Enter Location (optional): ");
             string? location = Console.ReadLine();
 
+            // Create a new event and add to the list
             Event newEvent = new Event
             {
                 Id = nextId++, 
@@ -97,12 +101,14 @@
 
         static void ListEvents()
         {
+            // If no events exist
             if (events.Count == 0)
             {
                 Console.WriteLine("No events have been added"); 
             }
             else
             {
+                // Loop through events and display
                 foreach (var e in events)
                 {
                     Console.WriteLine($"ID: {e.Id}, Name: {e.Name}, Date: {e.Date.ToShortDateString()}, Location: {e.Location}");
@@ -115,6 +121,7 @@
             Console.Write("Enter Event ID: ");
             string? _id = Console.ReadLine();
 
+            // Parse string input into int
             if (int.TryParse(_id, out int id))
             {
                 Console.WriteLine($"Valid ID entered: {id}");
@@ -124,9 +131,11 @@
                 Console.WriteLine("The ID you have entered does not exist. Try again");
             }
 
+            // Find event by ID
             var eventItem = events.Find(e => e.Id == id);
             if (eventItem != null)
             {
+                // Display event details
                 Console.WriteLine($"Name: {eventItem.Name}");
                 Console.WriteLine($"Description: {eventItem.Description}");
                 Console.WriteLine($"Date: {eventItem.Date.ToShortDateString()}");
@@ -143,6 +152,7 @@
             Console.Write("Enter Event ID to update: ");
             string? _id = Console.ReadLine();
 
+            // Parse string input into int
             if (int.TryParse(_id, out int id))
             {
                 Console.WriteLine($"Valid ID entered: {id}");
@@ -152,6 +162,7 @@
                 Console.WriteLine("The ID you have entered does not exist. Try again");
             }
 
+            // Find event by ID
             var eventItem = events.Find(e => e.Id == id);
             if (eventItem != null)
             {
@@ -164,7 +175,7 @@
 
                     if (string.IsNullOrEmpty(_name))
                     {
-                        break; 
+                        break; // Keep current name if no new name is entered
                     }
                     else
                     {
@@ -181,7 +192,7 @@
 
 
                 DateTime? newDate = eventItem.Date;
-                while (true)
+                while (true) // Loop to get a valid date
                 {
                     Console.Write($"Enter new Date (leave empty to keep current): ");
                     string? _date = Console.ReadLine();
@@ -189,9 +200,8 @@
 
                     if (string.IsNullOrEmpty(_date))
                     {
-                        break;
+                        break; // Keep exisiting date if no new date is enetered
                     }
-
 
                     DateTime date;
                     if (DateTime.TryParseExact(_date, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out date))
@@ -226,6 +236,7 @@
             Console.Write("Enter Event ID to delete: ");
             string? _id = Console.ReadLine();
 
+            // Parse string input into int
             if (int.TryParse(_id, out int id))
             {
                 Console.WriteLine($"Valid ID entered: {id}");
@@ -235,6 +246,7 @@
                 Console.WriteLine("The ID you have entered does not exist. Try again");
             }
 
+            // Find the event by its ID
             var eventItem = events.Find(e => e.Id == id);
             if (eventItem != null)
             {
