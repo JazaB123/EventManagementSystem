@@ -2,43 +2,41 @@
 {
     class Program
     {
-        // A list that will hold all created events
         private static List<Event> events = new List<Event>();
-        // A variable to assign unique IDs to each event
         private static int nextId = 1;
 
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the Event Management System!");
-            bool running = true; // Set running to true when user enters program
+            bool running = true;
 
             while (running)
             {
                 Console.Write("> ");
                 string? command = Console.ReadLine();
 
-                switch (command?.ToLower()) //Switch statement to handle the different commands
+                switch (command?.ToLower())
                 {
                     case "create":
-                        CreateEvent(); // Calls CreateEvent Method when user enters "create"
+                        CreateEvent(); 
                         break;
                     case "list":
-                        ListEvents(); // Calls ListEvents Method when user enters "list"
+                        ListEvents(); 
                         break;
                     case "get":
-                        GetEvent(); // Calls GetEvent Method when user enters "get"
+                        GetEvent(); 
                         break;
                     case "update":
-                        UpdateEvent(); // Calls UpdateEvent when user enters "update"
+                        UpdateEvent(); 
                         break;
                     case "delete":
-                        DeleteEvent(); // Calls DeleteEvent when user enters "delete"
+                        DeleteEvent(); 
                         break;
                     case "exit":
-                        running = false; // Set running to false when user enters "exit" and exits the program
+                        running = false; 
                         break;
                     default:
-                        Console.WriteLine("Unknown command"); // Message if the command is not recognized
+                        Console.WriteLine("Unknown command"); 
                         break;
                 }
             }
@@ -47,14 +45,14 @@
         static void CreateEvent()
         {
             string? name;
-            while (true) // Ensures the event name is not empty
+            while (true) 
             {
                 Console.Write("Enter Event Name: ");
                 name = Console.ReadLine();
 
                 if (!string.IsNullOrEmpty(name))
                 {
-                    break; // Exit loop if a name is entered
+                    break; 
                 }
                 else
                 {
@@ -66,15 +64,14 @@
             string? description = Console.ReadLine();
 
             DateTime date;
-            while (true) // Ensures the date is in the correct format and not empty
+            while (true) 
             {
                 Console.Write("Enter Date (yyyy-MM-dd): ");
                 string? _date = Console.ReadLine();
 
-                // Try to parse the date in yyyy-MM-dd format
                 if (DateTime.TryParseExact(_date, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out date))
                 {
-                    break; // Exit loop if a valid date is entered
+                    break; 
                 }
                 else
                 {
@@ -85,10 +82,9 @@
             Console.Write("Enter Location (optional): ");
             string? location = Console.ReadLine();
 
-            // Create new event and add to list
             Event newEvent = new Event
             {
-                Id = nextId++, // Assigns next available ID
+                Id = nextId++, 
                 Name = name,
                 Description = description,
                 Date = date,
@@ -101,14 +97,13 @@
 
         static void ListEvents()
         {
-            // Check if an event exists in the list
             if (events.Count == 0)
             {
-                Console.WriteLine("No events have been added"); // if no events exist return this message
+                Console.WriteLine("No events have been added"); 
             }
             else
             {
-                foreach (var e in events) // Display all events in the list
+                foreach (var e in events)
                 {
                     Console.WriteLine($"ID: {e.Id}, Name: {e.Name}, Date: {e.Date.ToShortDateString()}, Location: {e.Location}");
                 }
@@ -120,7 +115,6 @@
             Console.Write("Enter Event ID: ");
             string? _id = Console.ReadLine();
 
-            // Try to parse the string Id entered by the user into an int
             if (int.TryParse(_id, out int id))
             {
                 Console.WriteLine($"Valid ID entered: {id}");
@@ -130,11 +124,9 @@
                 Console.WriteLine("The ID you have entered does not exist. Try again");
             }
 
-            // Find event using the ID
             var eventItem = events.Find(e => e.Id == id);
             if (eventItem != null)
             {
-                // Display event details
                 Console.WriteLine($"Name: {eventItem.Name}");
                 Console.WriteLine($"Description: {eventItem.Description}");
                 Console.WriteLine($"Date: {eventItem.Date.ToShortDateString()}");
@@ -151,8 +143,6 @@
             Console.Write("Enter Event ID to update: ");
             string? _id = Console.ReadLine();
 
-
-            // Try to parse the string Id entered by the user into an int
             if (int.TryParse(_id, out int id))
             {
                 Console.WriteLine($"Valid ID entered: {id}");
@@ -162,12 +152,9 @@
                 Console.WriteLine("The ID you have entered does not exist. Try again");
             }
 
-
-            // Find the event by its ID
             var eventItem = events.Find(e => e.Id == id);
             if (eventItem != null)
             {
-                // Update event name
                 string? newName = eventItem.Name;
                 while (true)
                 {
@@ -177,11 +164,11 @@
 
                     if (string.IsNullOrEmpty(_name))
                     {
-                        break; // Exit loop if no new name is entered
+                        break; 
                     }
                     else
                     {
-                        newName = _name; // Save new name
+                        newName = _name;
                         break;
                     }
                 }
@@ -194,7 +181,7 @@
 
 
                 DateTime? newDate = eventItem.Date;
-                while (true) // Ensure the new date is valid format (leave empty to keep current)
+                while (true)
                 {
                     Console.Write($"Enter new Date (leave empty to keep current): ");
                     string? _date = Console.ReadLine();
@@ -202,14 +189,14 @@
 
                     if (string.IsNullOrEmpty(_date))
                     {
-                        break; // Exit loop if no new date is entered
+                        break;
                     }
 
 
                     DateTime date;
                     if (DateTime.TryParseExact(_date, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out date))
                     {
-                        eventItem.Date = date; // Update date if date is in valid format
+                        eventItem.Date = date;
                         break;
                     }
                     else
@@ -239,7 +226,6 @@
             Console.Write("Enter Event ID to delete: ");
             string? _id = Console.ReadLine();
 
-            // Try to parse the string Id entered by the user into an int
             if (int.TryParse(_id, out int id))
             {
                 Console.WriteLine($"Valid ID entered: {id}");
@@ -249,11 +235,9 @@
                 Console.WriteLine("The ID you have entered does not exist. Try again");
             }
 
-            // Find the event by ID and remove it
             var eventItem = events.Find(e => e.Id == id);
             if (eventItem != null)
             {
-                // Ask user to confirm delete
                 Console.WriteLine("\nEvent details:");
                 Console.WriteLine($"Name: {eventItem.Name}");
                 Console.WriteLine($"Description: {eventItem.Description}");
@@ -264,7 +248,7 @@
                 string? confirm = Console.ReadLine();
                 if (confirm?.ToLower() == "yes")
                 {
-                    events.Remove(eventItem); // remove from the list
+                    events.Remove(eventItem); 
                     Console.WriteLine("Event deleted successfully!");
                 }
                 else
